@@ -1,15 +1,10 @@
-# Fetching the latest node image on alpine linux
 FROM node:latest
 
-# Setting up the work directory
-WORKDIR /usr/dir/frontend
+WORKDIR /usr/src/frontend
+ENV HOST="0.0.0.0"
 
-# Installing dependencies
-COPY ./package.json /usr/dir/frontend
+COPY package*.json ./
 RUN npm install
 
-# Copying all the files in our project
 COPY . .
-
-# Starting our application
 CMD npm start

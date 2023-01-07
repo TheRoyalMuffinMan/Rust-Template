@@ -11,11 +11,17 @@ services:
       - mongodb_data_container:/data/db
   
   rust:
-    build: .
+    build: ./backend/
     ports: 
-      - 80:8000
+      - 800:8000
     links:
       - mongodb_container:mongo
 
+  react:
+    build: ./frontend/
+    ports:
+      - 80:3000
+    links:
+      - rust:rust
 volumes:
   mongodb_data_container:
