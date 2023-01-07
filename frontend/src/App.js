@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChakraProvider,
   Box,
@@ -8,11 +8,20 @@ import {
   Code,
   Grid,
   theme,
+  Button,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './component/ColorModeSwitcher';
 import { Logo } from './component/Logo';
 
 function App() {
+  const [value, setValue] = useState(0);
+
+  const getValue = async () => {
+    const response = await fetch("localhost:80/value");
+    const result = await response.json();
+    setValue(result);
+  }
+
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl">
@@ -22,7 +31,9 @@ function App() {
             <Logo h="40vmin" pointerEvents="none" />
             <Text>
               Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
+              okay
             </Text>
+            <Button onClick={getValue}>{value}</Button>
             <Link
               color="teal.500"
               href="https://chakra-ui.com"
