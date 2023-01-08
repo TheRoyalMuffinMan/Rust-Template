@@ -1,6 +1,7 @@
 FROM rust:latest
 
-ENV ROCKET_ADDRESS="0.0.0.0"
+# ENV ROCKET_ADDRESS="0.0.0.0"
+ENV MONGOURI="mongodb+srv://root:rootpassword@mongo:27017/golangDB?retryWrites=true&w=majority"
 
 WORKDIR /usr/src/backend
 # COPY ./backend/ .
