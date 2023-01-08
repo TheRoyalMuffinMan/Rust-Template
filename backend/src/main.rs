@@ -1,29 +1,37 @@
-#![feature(proc_macro_hygiene, decl_macro)]
+#[macro_use] extern crate rocket;
 
-#[macro_use] extern crate rocket; 
+use rocket::{get, http::Status, serde::json::Json}
 
-use std::io;
-use std::env; 
-use std::path::{Path, PathBuf};
-
-use rocket::response::NamedFile; 
-
+// Try visiting:
+//   http://127.0.0.1:8000/hello/world
 #[get("/")]
-fn index() -> io::Result<NamedFile> {
-    let page_directory_path = get_directory_path();
-    NamedFile::open(Path::new(&page_directory_path).join("index.html"))
+fn world() -> &'static str {
+    "Hello, world!"
 }
 
-#[get("/<file..>")]
-fn files(file: PathBuf) -> io::Result<NamedFile> {
-    let page_directory_path = get_directory_path();
-    NamedFile::open(Path::new(&page_directory_path).join(file))
+// Try visiting:
+//   http://127.0.0.1:8000/wave/Rocketeer/100
+#[get("/<name>/<age>")]
+fn wave(name: &str, age: u8) -> String {
+    format!("👋 Hello, {} year old named {}!", age, name)
 }
 
-fn get_directory_path() -> String {
-    format!("{}/../frontend/build", env!("CARGO_MANIFEST_DIR"))
+// #[get("/value")]
+// fn value() -> Value {
+//     json!({
+//         "id": 83,
+//         "values": [1, 2, 3, 4]
+//     })
+// }
+
+#[get("/value")]
+fn value() -> Result<Json<i32>, Status> {
+    Ok(Json(32));
 }
 
-fn main() {
-    rocket::ignite().mount("/", routes![index, files]).launch();
+#[launch]
+fn rocket() -> _ {
+    rocket::build()
+        .mount("/", routes![world, wave])
+        .mount("/", routes![value])
 }
