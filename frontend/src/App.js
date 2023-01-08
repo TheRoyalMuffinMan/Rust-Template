@@ -17,7 +17,7 @@ function App() {
   const [value, setValue] = useState(0);
 
   const getValue = async () => {
-    const response = await fetch("http://127.0.0.1:8000/value", { mode: 'no-cors' });
+    const response = await fetch("http://localhost:8000/value");
     console.log(response);
     const result = await response.json();
     console.log(result);
