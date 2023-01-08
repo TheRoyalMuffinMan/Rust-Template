@@ -36,5 +36,5 @@ async fn hello(con: Connection<Mongo>) -> Result<Json<String>, Status> {
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().attach(Mongo::init()).attach(cors::Cors).mount("/", routes![value])
+    rocket::build().attach(Mongo::init()).attach(cors::Cors).mount("/", routes![value, hello])
 }
