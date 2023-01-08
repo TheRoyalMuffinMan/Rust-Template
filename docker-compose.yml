@@ -13,7 +13,7 @@ services:
   rust:
     build: ./backend/
     ports: 
-      - 800:8000
+      - 8000:8000
     links:
       - mongodb_container:mongo
 
